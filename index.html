@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<!-- Ejemplos Prácticos -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Flujo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: {
+                        'pulse-slow': 'pulse 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out'
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                        fadeUp: { from: { opacity: 0, transform: 'translateY(30px)' }, to: { opacity: 1, transform: 'translateY(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    <!-- Navegación -->
+    <nav id="navegacion" aria-label="Navegación principal"
+        class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#inicio" class="flex items-center gap-2" aria-label="Ir al inicio">
+                    <svg class="w-8 h-8 text-indigo-500 animate-pulse-slow" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span
+                        class="text-xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">DiagramasFlujo</span>
+                </a>
+                <button id="menuHamburguesa" class="md:hidden flex flex-col gap-1 p-2"
+                    aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menuNav">
+                    <span class="w-6 h-0.5 bg-gray-700 dark:bg-gray-200 transition-transform" aria-hidden="true"></span>
+                    <span class="w-6 h-0.5 bg-gray-700 dark:bg-gray-200 transition-opacity" aria-hidden="true"></span>
+                    <span class="w-6 h-0.5 bg-gray-700 dark:bg-gray-200 transition-transform" aria-hidden="true"></span>
+                </button>
+                <ul id="menuNav" class="hidden md:flex items-center gap-6" role="menubar">
+                    <li role="none"><a href="#inicio" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Inicio</a>
+                    </li>
+                    <li role="none"><a href="#introduccion" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Introducción</a>
+                    </li>
+                    <li role="none"><a href="#simbolos" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Símbolos</a>
+                    </li>
+                    <li role="none"><a href="#estructuras" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Estructuras</a>
+                    </li>
+                    <li role="none"><a href="#ejemplos" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Ejemplos</a>
+                    </li>
+                    <li role="none"><a href="#quiz" role="menuitem"
+                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Quiz</a>
+                    </li>
+                </ul>
+                <button id="botonTema" aria-label="Cambiar tema de color"
+                    class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <svg class="icono-sol w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <svg class="icono-luna hidden w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"
+                        aria-hidden="true">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="contenido-principal">
+
+        <!-- Hero -->
+        <section id="inicio"
+            class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700">
+            <div
+                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=')] opacity-30">
+            </div>
+
+            <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+                <div
+                    class="mb-6 inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                    <span class="text-yellow-300 font-semibold text-sm">Fundamentos de Programación</span>
+                </div>
+
+                <h1
+                    class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+                    Domina los
+                    <span
+                        class="bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 text-transparent bg-clip-text">
+                        Diagramas de Flujo
+                    </span>
+                </h1>
+
+                <p class="text-lg md:text-xl lg:text-2xl text-white/85 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    Aprende a visualizar algoritmos y procesos de forma clara y profesional.
+                    <span class="block mt-2 text-white/70 text-base md:text-lg">
+                        La base fundamental para todo estudiante que quiera aprender a programar
+                    </span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#introduccion"
+                        class="group px-8 py-4 bg-white text-indigo-700 font-bold rounded-full text-lg shadow-2xl hover:shadow-white/30 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                        Empecemos
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="absolute right-10 top-1/2 -translate-y-1/2 opacity-20 animate-float hidden lg:block">
+                <svg class="w-52 h-80 drop-shadow-2xl" viewBox="0 0 200 320">
+                    <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0.4" />
+                            <stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:0.1" />
+                        </linearGradient>
+                    </defs>
+
+                    <ellipse cx="100" cy="35" rx="45" ry="22" fill="url(#gradient1)" stroke="white" stroke-width="3" />
+                    <line x1="100" y1="57" x2="100" y2="90" stroke="white" stroke-width="3" />
+
+                    <rect x="55" y="90" width="90" height="45" rx="5" fill="url(#gradient1)" stroke="white"
+                        stroke-width="3" />
+                    <line x1="100" y1="135" x2="100" y2="165" stroke="white" stroke-width="3" />
+
+                    <path d="M100 165 L145 200 L100 235 L55 200Z" fill="url(#gradient1)" stroke="white"
+                        stroke-width="3" />
+                    <line x1="100" y1="235" x2="100" y2="265" stroke="white" stroke-width="3" />
+
+                    <ellipse cx="100" cy="285" rx="45" ry="22" fill="url(#gradient1)" stroke="white" stroke-width="3" />
+                </svg>
+            </div>
+
+            <div class="absolute left-10 bottom-20 opacity-10 hidden md:block">
+                <svg class="w-32 h-32" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="2" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="2" />
+                    <circle cx="50" cy="50" r="20" fill="none" stroke="white" stroke-width="2" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- Introducción -->
+        <section id="introduccion" class="py-20 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        Introducción a los Diagramas de Flujo
+                    </h2>
+                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-8 rounded-full">
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+                        Domina la representación visual de algoritmos, la habilidad técnica que separa a los que "pican
+                        código" de los verdaderos programadores.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+
+                    <div
+                        class="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 dark:border-gray-700">
+                        <div
+                            class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
+                            <svg class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">¿Qué son?</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+                            Es el <strong>mapa visual de tu lógica</strong>. Utiliza símbolos universales para mostrar
+                            el
+                            camino que siguen los datos, permitiéndote resolver problemas complejos paso a paso antes de
+                            tocar el teclado.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 dark:border-gray-700">
+                        <div
+                            class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
+                            <svg class="w-7 h-7 text-purple-600 group-hover:text-white transition-colors" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">En la Facultad</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+                            Es el lenguaje base en <strong>Programación</strong>. Antes de usar Python o otro lenguaje
+                            de
+                            programación, los
+                            diagramas te enseñan a pensar algorítmicamente, asegurando que tus soluciones tengan una
+                            estructura sólida y aprobable.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 dark:border-gray-700">
+                        <div
+                            class="w-14 h-14 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-colors duration-300">
+                            <svg class="w-7 h-7 text-pink-600 group-hover:text-white transition-colors" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">¿Por qué aprender?</h3>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+                            Te ahorra horas de frustración frente a la pantalla. Al diagramar, detectas <strong>errores
+                                de
+                                lógica</strong> tambien te ayuda a entender mejor la logica de programacion.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="simbolos"
+            class="py-20 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        Símbolos Fundamentales
+                    </h2>
+                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6 rounded-full">
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
+                        El "alfabeto" visual que todo estudiante de sistemas debe dominar para aprobar Programación I.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <ellipse cx="70" cy="35" rx="60" ry="28"
+                                    class="fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2 group-hover:fill-indigo-200 dark:group-hover:fill-indigo-800 transition-colors" />
+                                <text x="70" y="40" class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                    text-anchor="middle">Inicio/Fin</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-indigo-600 dark:text-indigo-400 mb-2 text-center">Terminal
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Indica dónde comienza y termina tu algoritmo. Siempre debe haber un solo
+                            <strong>Inicio</strong>
+                            y al menos un <strong>Fin</strong> claramente marcados.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <rect x="20" y="15" width="100" height="40" rx="2"
+                                    class="fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2 group-hover:fill-purple-200 dark:group-hover:fill-purple-800 transition-colors" />
+                                <text x="70" y="40" class="fill-purple-700 dark:fill-purple-300 text-sm font-semibold"
+                                    text-anchor="middle">Proceso</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-purple-600 dark:text-purple-400 mb-2 text-center">Proceso</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Se usa para realizar <strong>operaciones matemáticas</strong> o asignar valores a variables.
+                            Ejemplo: <code class="bg-gray-100 dark:bg-gray-800 px-1 italic">suma = a + b</code>.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-24" viewBox="0 0 140 90">
+                                <path d="M70 10 L125 45 L70 80 L15 45Z"
+                                    class="fill-pink-100 dark:fill-pink-900 stroke-pink-600 dark:stroke-pink-400 stroke-2 group-hover:fill-pink-200 dark:group-hover:fill-pink-800 transition-colors" />
+                                <text x="70" y="50" class="fill-pink-700 dark:fill-pink-300 text-sm font-semibold"
+                                    text-anchor="middle">Decisión</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-pink-600 dark:text-pink-400 mb-2 text-center">Decisión</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Evalúa una condición lógica. Tiene obligatoriamente dos salidas: una por <strong>Verdadero
+                                (Sí)</strong> y otra por <strong>Falso (No)</strong>.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <path d="M25 55 L110 55 L120 15 L35 15 Z"
+                                    class="fill-blue-100 dark:fill-blue-900 stroke-blue-600 dark:stroke-blue-400 stroke-2 group-hover:fill-blue-200 dark:group-hover:fill-blue-800 transition-colors" />
+                                <text x="70" y="40" class="fill-blue-700 dark:fill-blue-300 text-sm font-semibold"
+                                    text-anchor="middle">Entrada</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-blue-600 dark:text-blue-400 mb-2 text-center">Entrada (Leer)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Representa el ingreso de datos por parte del usuario mediante el teclado. Se asocia con la
+                            instrucción <strong>Leer</strong>.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <path d="M20 15 L115 15 L115 55 C90 30 45 80 20 55 Z"
+                                    class="fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2 group-hover:fill-teal-200 dark:group-hover:fill-teal-800 transition-colors" />
+                                <text x="65" y="40" class="fill-teal-700 dark:fill-teal-300 text-sm font-semibold"
+                                    text-anchor="middle">Salida</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-teal-600 dark:text-teal-400 mb-2 text-center">Salida (Mostrar)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Muestra los resultados o mensajes en pantalla. Es el símbolo que usas para imprimir el
+                            famoso
+                            <strong>"Hola Mundo"</strong>.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <circle cx="70" cy="35" r="25"
+                                    class="fill-orange-100 dark:fill-orange-900 stroke-orange-600 dark:stroke-orange-400 stroke-2 group-hover:fill-orange-200 dark:group-hover:fill-orange-800 transition-colors" />
+                                <text x="70" y="42" class="fill-orange-700 dark:fill-orange-300 text-lg font-bold"
+                                    text-anchor="middle">A</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-orange-600 dark:text-orange-400 mb-2 text-center">Conector
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Sirve para enlazar partes del diagrama en la misma página cuando te quedas sin espacio
+                            vertical.
+                            ¡Mantiene el orden!
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <path d="M40 20 L100 20 L115 35 L100 50 L40 50 L25 35 Z"
+                                    class="fill-cyan-100 dark:fill-cyan-900 stroke-cyan-600 dark:stroke-cyan-400 stroke-2 group-hover:fill-cyan-200 dark:group-hover:fill-cyan-800 transition-colors" />
+                                <text x="70" y="38" class="fill-cyan-700 dark:fill-cyan-300 text-xs font-semibold"
+                                    text-anchor="middle">for</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-cyan-600 dark:text-cyan-400 mb-2 text-center">Bucle FOR (Para)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Repetición controlada. Úsalo cuando <strong>sabes exactamente</strong> cuántas veces se debe
+                            repetir el proceso (Ej: del 1 al 10).
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <path d="M30 20 L115 20 L115 50 L30 50 L20 35 Z"
+                                    class="fill-violet-100 dark:fill-violet-900 stroke-violet-600 dark:stroke-violet-400 stroke-2 group-hover:fill-violet-200 dark:group-hover:fill-violet-800 transition-colors" />
+                                <text x="70" y="38" class="fill-violet-700 dark:fill-violet-300 text-xs font-semibold"
+                                    text-anchor="middle">while</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-violet-600 dark:text-violet-400 mb-2 text-center">Bucle WHILE
+                            (Mientras)</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Evalúa la condición <strong>antes de entrar</strong>. Si no se cumple al inicio, el código
+                            de
+                            adentro nunca se ejecuta.
+                        </p>
+                    </div>
+
+                    <div
+                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        <div class="mb-6 flex justify-center">
+                            <svg class="w-32 h-20" viewBox="0 0 140 70">
+                                <path d="M30 20 L115 20 L115 50 L30 50 L20 35 Z"
+                                    class="fill-violet-100 dark:fill-violet-900 stroke-violet-600 dark:stroke-violet-400 stroke-2 group-hover:fill-violet-200 dark:group-hover:fill-violet-800 transition-colors" />
+                                <text x="68" y="37" class="fill-violet-700 dark:fill-violet-300 text-xs font-semibold"
+                                    text-anchor="middle" dominant-baseline="middle">do while</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-violet-600 dark:text-violet-400 mb-2 text-center">DO-WHILE
+                            (Hacer
+                            hasta)</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-center text-sm leading-relaxed">
+                            Evalúa la condición <strong>al final</strong>. Garantiza que el proceso se ejecute al menos
+                            una
+                            vez antes de preguntar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estructuras -->
+        <section id="estructuras" class="py-20 px-4 bg-white dark:bg-gray-900 transition-colors duration-300">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        Estructuras de Control
+                    </h2>
+                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6 rounded-full">
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
+                        Los cimientos de la lógica: aprende cómo decidir caminos y repetir tareas de forma inteligente.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Condicional IF-ELSE</h3>
+                            <span
+                                class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold uppercase tracking-wider">Toma
+                                de Decisiones</span>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-950 p-6 rounded-xl mb-6 shadow-inner flex justify-center">
+                            <svg viewBox="0 0 320 220" class="w-full h-56">
+                                <line x1="160" y1="10" x2="160" y2="30"
+                                    class="stroke-gray-700 dark:stroke-gray-300 stroke-2" />
+                                <path d="M160 30 L210 70 L160 110 L110 70 Z"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="75" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">¿Condición?</text>
+                                <line x1="110" y1="70" x2="80" y2="70"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="90" y="65" class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+                                <line x1="210" y1="70" x2="240" y2="70"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="220" y="65"
+                                    class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+                                <rect x="40" y="100" width="80" height="40"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="80" y="125" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">Acción B</text>
+                                <rect x="200" y="100" width="80" height="40"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="240" y="125" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">Acción A</text>
+                                <line x1="80" y1="70" x2="80" y2="100"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="240" y1="70" x2="240" y2="100"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="80" y1="140" x2="80" y2="170"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="240" y1="140" x2="240" y2="170"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="80" y1="170" x2="240" y2="170"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="160" y1="170" x2="160" y2="200"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                            </svg>
+                        </div>
+
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Es la bifurcación del camino. Permite que el algoritmo elija entre dos opciones (V/F).
+                            <strong>Ejemplo práctico:</strong> Verificar si un alumno tiene nota > 51 para marcarlo como
+                            "Aprobado".
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle FOR (Para)</h3>
+                            <span
+                                class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-xs font-bold uppercase tracking-wider">Ciclo
+                                Controlado</span>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-950 p-6 rounded-xl mb-6 shadow-inner flex justify-center">
+                            <svg viewBox="0 0 320 220" class="w-full h-56">
+                                <path d="M70 20 L250 20 L270 45 L250 70 L70 70 L50 45 Z"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="48" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">i = 1; i ≤ n; i++</text>
+                                <text x="165" y="88"
+                                    class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+                                <line x1="160" y1="70" x2="160" y2="95"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <rect x="125" y="95" width="70" height="35"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="117" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">Repetir</text>
+                                <line x1="160" y1="130" x2="160" y2="185"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="160" y1="170" x2="30" y2="170"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="30" y1="170" x2="30" y2="45"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="35" y="35" class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+                                <line x1="50" y1="45" x2="30" y2="45"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                            </svg>
+                        </div>
+
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Ideal cuando <strong>ya conoces</strong> el número exacto de vueltas. Usa una variable
+                            (contador) que se incrementa automáticamente. <strong>Ejemplo:</strong> Imprimir las tablas
+                            de
+                            multiplicar del 1 al 10.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle WHILE</h3>
+                            <span
+                                class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-xs font-bold uppercase tracking-wider">Pre-condición</span>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-950 p-6 rounded-xl mb-6 shadow-inner flex justify-center">
+                            <svg viewBox="0 0 320 220" class="w-full h-48">
+                                <path d="M90 20 L230 20 L230 70 L90 70 L70 45 Z"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="48" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">¿Sigue siendo V?</text>
+                                <text x="170" y="85"
+                                    class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+                                <line x1="160" y1="70" x2="160" y2="95"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <rect x="120" y="95" width="80" height="40"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="120" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">Instrucciones</text>
+                                <line x1="160" y1="135" x2="160" y2="175"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="160" y1="160" x2="60" y2="160"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="60" y1="160" x2="60" y2="45"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="60" y1="45" x2="70" y2="45"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="60" y="35" class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+                            </svg>
+                        </div>
+
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            El "guardián" de la entrada. Si la condición no se cumple de entrada, el código de adentro
+                            <strong>nunca se ejecuta</strong>. <strong>Ejemplo:</strong> Pedir una contraseña hasta que
+                            sea
+                            correcta.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle DO-WHILE</h3>
+                            <span
+                                class="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 rounded-full text-xs font-bold uppercase tracking-wider">Post-condición</span>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-950 p-6 rounded-xl mb-6 shadow-inner flex justify-center">
+                            <svg viewBox="0 0 320 240" class="w-full h-48">
+                                <line x1="160" y1="10" x2="160" y2="50"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <rect x="120" y="50" width="80" height="40"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="75" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">Ejecutar 1 vez</text>
+                                <line x1="160" y1="120" x2="160" y2="90"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <path d="M90 120 L230 120 L230 170 L90 170 L70 145 Z"
+                                    class="fill-cyan-200 dark:fill-cyan-900 stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="160" y="148" class="fill-gray-900 dark:fill-gray-100 text-xs font-semibold"
+                                    text-anchor="middle">¿Repetir?</text>
+                                <text x="60" y="140"
+                                    class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+                                <line x1="70" y1="145" x2="50" y2="145"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="50" y1="145" x2="50" y2="30"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <line x1="50" y1="30" x2="160" y2="30"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                                <text x="170" y="185" class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+                                <line x1="160" y1="170" x2="160" y2="190"
+                                    class="stroke-gray-800 dark:stroke-gray-200 stroke-2" />
+                            </svg>
+                        </div>
+
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Ejecuta la acción y <strong>después</strong> pregunta. Garantiza al menos una ejecución.
+                            <strong>Ejemplo ideal:</strong> Menús de cajero automático donde primero ves las opciones y
+                            luego decides si salir.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conceptos -->
+        <section id="conceptos" class="py-24 px-4 bg-slate-50 dark:bg-gray-950 transition-colors duration-500">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        Fundamentos de Programación
+                    </h2>
+                    <div class="w-32 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-8 rounded-full">
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+                        Domina los pilares lógicos que permiten construir cualquier software, desde una aplicación móvil
+                        hasta una inteligencia artificial.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div
+                        class="item-acordeon group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-200 dark:border-gray-800 transition-all duration-500">
+                        <button
+                            class="cabecera-acordeon w-full p-8 flex justify-between items-center text-left focus:outline-none">
+                            <div class="flex items-center gap-6">
+                                <div
+                                    class="w-14 h-14 bg-indigo-100 dark:bg-indigo-500/10 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-bold text-gray-800 dark:text-white">Variables y
+                                        Constantes</span>
+                                    <span class="text-sm text-indigo-500 font-medium">Gestión de memoria y datos</span>
+                                </div>
+                            </div>
+                            <span
+                                class="icono-acordeon text-2xl text-gray-400 group-hover:text-indigo-600 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="contenido-acordeon hidden opacity-0 transition-opacity duration-500">
+                            <div class="p-8 pt-0">
+                                <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">
+                                    Imagina una variable como una "caja" etiquetada donde guardas información que puede
+                                    cambiar, mientras que una constante protege valores que deben permanecer fijos.
+                                </p>
+
+
+
+                                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                    <div class="bg-gray-900 rounded-2xl p-6 font-mono text-sm shadow-inner">
+                                        <div class="flex gap-2 mb-3">
+                                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        </div>
+                                        <div class="text-blue-400">let <span class="text-white">usuario</span> = <span
+                                                class="text-yellow-300">"Alex"</span>; <span class="text-gray-500">//
+                                                Variable</span></div>
+                                        <div class="text-purple-400">const <span class="text-white">PI</span> = <span
+                                                class="text-blue-300">3.1416</span>; <span class="text-gray-500">//
+                                                Constante</span></div>
+                                    </div>
+                                    <div
+                                        class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-800">
+                                        <h4 class="font-bold text-indigo-800 dark:text-indigo-300 mb-3">Tipos Primitivos
+                                        </h4>
+                                        <div class="flex flex-wrap gap-2 text-xs">
+                                            <span
+                                                class="px-3 py-1 bg-white dark:bg-gray-800 rounded-full border border-indigo-200 dark:border-indigo-700">String
+                                                (Texto)</span>
+                                            <span
+                                                class="px-3 py-1 bg-white dark:bg-gray-800 rounded-full border border-indigo-200 dark:border-indigo-700">Number
+                                                (Números)</span>
+                                            <span
+                                                class="px-3 py-1 bg-white dark:bg-gray-800 rounded-full border border-indigo-200 dark:border-indigo-700">Boolean
+                                                (V/F)</span>
+                                            <span
+                                                class="px-3 py-1 bg-white dark:bg-gray-800 rounded-full border border-indigo-200 dark:border-indigo-700">Array
+                                                (Listas)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="item-acordeon group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-200 dark:border-gray-800 transition-all duration-500">
+                        <button
+                            class="cabecera-acordeon w-full p-8 flex justify-between items-center text-left focus:outline-none">
+                            <div class="flex items-center gap-6">
+                                <div
+                                    class="w-14 h-14 bg-purple-100 dark:bg-purple-500/10 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-bold text-gray-800 dark:text-white">Lógica y
+                                        Aritmética</span>
+                                    <span class="text-sm text-purple-500 font-medium">El motor del procesamiento</span>
+                                </div>
+                            </div>
+                            <span
+                                class="icono-acordeon text-2xl text-gray-400 group-hover:text-purple-600 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="contenido-acordeon hidden opacity-0 transition-opacity duration-500">
+                            <div class="p-8 pt-0">
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4
+                                            class="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+                                            <span class="w-2 h-2 bg-purple-500 rounded-full"></span> Operadores de
+                                            Verdad
+                                        </h4>
+                                        <div class="space-y-3">
+                                            <div
+                                                class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                                                <code class="font-bold text-purple-600">AND (&&)</code>
+                                                <span class="text-sm text-gray-500">Ambos deben ser ciertos</span>
+                                            </div>
+                                            <div
+                                                class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                                                <code class="font-bold text-purple-600">OR (||)</code>
+                                                <span class="text-sm text-gray-500">Uno de los dos basta</span>
+                                            </div>
+                                            <div
+                                                class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                                                <code class="font-bold text-purple-600">NOT (!)</code>
+                                                <span class="text-sm text-gray-500">Invierte el resultado</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bg-purple-50 dark:bg-purple-900/10 p-6 rounded-2xl border border-purple-100 dark:border-purple-800">
+                                        <h4 class="font-bold text-purple-800 dark:text-purple-300 mb-4">El operador
+                                            Módulo
+                                            (%)</h4>
+                                        <p class="text-sm text-purple-900 dark:text-purple-400 leading-relaxed mb-4">
+                                            No devuelve el cociente, sino el <strong>residuo</strong> de una división.
+                                            Es
+                                            clave para detectar números pares o ciclos.
+                                        </p>
+                                        <div
+                                            class="bg-white dark:bg-gray-950 p-3 rounded-lg text-center font-mono text-purple-600">
+                                            10 % 3 = <span class="font-bold">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="item-acordeon group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-200 dark:border-gray-800 transition-all duration-500">
+                        <button
+                            class="cabecera-acordeon w-full p-8 flex justify-between items-center text-left focus:outline-none">
+                            <div class="flex items-center gap-6">
+                                <div
+                                    class="w-14 h-14 bg-pink-100 dark:bg-pink-500/10 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-pink-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-bold text-gray-800 dark:text-white">Estructuras de
+                                        Control</span>
+                                    <span class="text-sm text-pink-500 font-medium">Toma de decisiones y bucles</span>
+                                </div>
+                            </div>
+                            <span
+                                class="icono-acordeon text-2xl text-gray-400 group-hover:text-pink-600 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="contenido-acordeon hidden opacity-0 transition-opacity duration-500">
+                            <div class="p-8 pt-0">
+                                <p class="text-gray-600 dark:text-gray-300 mb-6">Determinan el flujo de ejecución: si el
+                                    programa debe saltar una instrucción o repetir una tarea.</p>
+
+
+
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div
+                                        class="p-4 bg-pink-50 dark:bg-pink-900/10 rounded-xl border border-pink-100 dark:border-pink-800">
+                                        <h5 class="font-bold text-pink-700 dark:text-pink-400 mb-2 italic">Condicionales
+                                            (If/Else)</h5>
+                                        <p class="text-sm">Ejecutan código solo si se cumple una condición. "Si llueve,
+                                            lleva paraguas".</p>
+                                    </div>
+                                    <div
+                                        class="p-4 bg-pink-50 dark:bg-pink-900/10 rounded-xl border border-pink-100 dark:border-pink-800">
+                                        <h5 class="font-bold text-pink-700 dark:text-pink-400 mb-2 italic">Bucles
+                                            (For/While)</h5>
+                                        <p class="text-sm">Repiten una acción mientras la condición sea válida. Ideal
+                                            para
+                                            procesar listas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Ejemplos -->
+        <section id="ejemplos"
+            class="py-20 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                        Ejemplos Prácticos
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6"></div>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
+                        Aprende mediante simuladores interactivos paso a paso
+                    </p>
+                </div>
+
+                <!-- Pestañas de navegación mejoradas -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button
+                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+                        data-ejemplo="area-circulo">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke-width="2" />
+                            </svg>
+                            Área del Círculo
+                        </span>
+                    </button>
+                    <button
+                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-md"
+                        data-ejemplo="par-impar">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            Par o Impar
+                        </span>
+                    </button>
+                    <button
+                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-md"
+                        data-ejemplo="suma-1-100">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
+                            </svg>
+                            Suma 1-100
+                        </span>
+                    </button>
+                    <button
+                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-md"
+                        data-ejemplo="mayor-3">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                            </svg>
+                            Mayor de 3
+                        </span>
+                    </button>
+                    <button
+                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-md"
+                        data-ejemplo="tabla-multiplicar">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Tabla de Multiplicar
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Área del Círculo -->
+                <div class="contenido-pestana activo" id="area-circulo">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <!-- Diagrama -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Cálculo del
+                                    Área de
+                                    un Círculo</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Estructura secuencial básica</p>
+                                <div
+                                    class="mt-4 bg-indigo-50 dark:bg-indigo-950 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                                    <p class="text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">Fórmula:
+                                    </p>
+                                    <p class="text-lg font-mono text-indigo-900 dark:text-indigo-100">área = π × radio²
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">Diagrama de
+                                    Flujo</h4>
+                                <svg viewBox="0 0 300 400" class="w-full max-w-xs mx-auto">
+                                    <!-- Inicio -->
+                                    <ellipse cx="150" cy="30" rx="50" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="1" />
+                                    <text x="150" y="36"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">Inicio</text>
+
+                                    <line x1="150" y1="50" x2="150" y2="75"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="2" />
+
+                                    <!-- Entrada -->
+                                    <path d="M100 115 L200 115 L210 75 L110 75 Z"
+                                        class="paso-diagrama fill-blue-100 dark:fill-blue-900 stroke-blue-600 dark:stroke-blue-400 stroke-2"
+                                        data-paso="3" />
+                                    <text x="150" y="99" class="fill-blue-700 dark:fill-blue-300 text-xs font-semibold"
+                                        text-anchor="middle">radio</text>
+
+                                    <line x1="150" y1="115" x2="150" y2="140"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="4" />
+
+                                    <!-- Proceso -->
+                                    <rect x="60" y="140" width="180" height="50" rx="2"
+                                        class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                        data-paso="5" />
+                                    <text x="150" y="170" class="fill-purple-700 dark:fill-purple-300 text-xs"
+                                        text-anchor="middle">area = 3.1416 * radio * radio</text>
+
+                                    <line x1="150" y1="190" x2="150" y2="215"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6" />
+
+                                    <!-- Salida -->
+                                    <path d="M100 215 L200 215 L200 255 C175 230 125 280 100 255 Z"
+                                        class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                        data-paso="7" />
+                                    <text x="150" y="240" class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                        text-anchor="middle">area</text>
+
+                                    <line x1="150" y1="255" x2="150" y2="280"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8" />
+
+                                    <!-- Fin -->
+                                    <ellipse cx="150" cy="300" rx="50" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="9" />
+                                    <text x="150" y="306"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">Fin</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Simulador -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 dark:text-white">Simulador Interactivo</h4>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                        Radio del círculo (cm):
+                                    </label>
+                                    <input type="number" id="input-radio" value="5" min="0.1" step="0.1"
+                                        class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg">
+                                </div>
+
+                                <div class="flex gap-3">
+                                    <button id="ejecutar-area"
+                                        class="flex-1 py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                        </svg>
+                                        Ejecutar
+                                    </button>
+                                    <button id="reiniciar-area"
+                                        class="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[180px] max-h-[300px] overflow-y-auto shadow-inner"
+                                    id="salida-area">
+                                    <p class="text-gray-500">→ Presiona "Ejecutar" para comenzar la simulación</p>
+                                </div>
+
+                                <div
+                                    class="bg-blue-50 dark:bg-blue-950 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
+                                    <h5
+                                        class="font-semibold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información
+                                    </h5>
+                                    <p class="text-sm text-blue-600 dark:text-blue-400">
+                                        Este algoritmo demuestra una estructura secuencial simple: entrada → proceso →
+                                        salida.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Par o Impar -->
+                <div class="contenido-pestana hidden" id="par-impar">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Determinar Par
+                                    o
+                                    Impar</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Estructura condicional IF-ELSE</p>
+                                <div
+                                    class="mt-4 bg-pink-50 dark:bg-pink-950 p-4 rounded-xl border border-pink-200 dark:border-pink-800">
+                                    <p class="text-sm font-semibold text-pink-700 dark:text-pink-300 mb-2">Lógica:</p>
+                                    <p class="text-lg font-mono text-pink-900 dark:text-pink-100">num % 2 == 0 → Par</p>
+                                    <p class="text-lg font-mono text-pink-900 dark:text-pink-100">num % 2 != 0 → Impar
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
+
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
+                                    Diagrama de Flujo
+                                </h4>
+
+                                <svg viewBox="0 0 340 320" class="w-full max-w-md mx-auto">
+                                    <!-- Inicio -->
+                                    <ellipse cx="170" cy="25" rx="55" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="1" />
+                                    <text x="170" y="31"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">
+                                        Inicio
+                                    </text>
+
+                                    <!-- Flecha -->
+                                    <line x1="170" y1="45" x2="170" y2="60"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="2" />
+
+                                    <!-- Entrada -->
+                                    <path d="M130 95 L220 95 L230 60 L140 60 Z"
+                                        class="paso-diagrama fill-blue-100 dark:fill-blue-900 stroke-blue-600 dark:stroke-blue-400 stroke-2"
+                                        data-paso="3" />
+                                    <text x="180" y="82" class="fill-blue-700 dark:fill-blue-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        num
+                                    </text>
+
+                                    <!-- Flecha -->
+                                    <line x1="170" y1="95" x2="170" y2="115"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="4" />
+
+                                    <!-- Decision -->
+                                    <path d="M170 115 L225 155 L170 195 L115 155 Z"
+                                        class="paso-diagrama fill-pink-100 dark:fill-pink-900 stroke-pink-600 dark:stroke-pink-400 stroke-2"
+                                        data-paso="5" />
+                                    <text x="170" y="160" class="fill-pink-700 dark:fill-pink-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        num % 2 = 0
+                                    </text>
+
+                                    <!-- Rama Verdadera -->
+                                    <line x1="225" y1="155" x2="295" y2="155"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-par" />
+                                    <line x1="295" y1="155" x2="295" y2="200"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-par" />
+                                    <text x="245" y="148" class="fill-green-600 dark:fill-green-400 text-xs font-bold">
+                                        V
+                                    </text>
+
+                                    <!-- Salida PAR -->
+                                    <path d="M270 170 L320 170 L320 200 C305 185 285 215 270 200 Z"
+                                        class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                        data-paso="7-par" />
+                                    <text x="295" y="190" class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        "PAR"
+                                    </text>
+
+                                    <!-- Rama Falsa -->
+                                    <line x1="115" y1="155" x2="45" y2="155"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-impar" />
+                                    <line x1="45" y1="155" x2="45" y2="200"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-impar" />
+                                    <text x="90" y="148" class="fill-red-600 dark:fill-red-400 text-xs font-bold">
+                                        F
+                                    </text>
+
+                                    <!-- Salida IMPAR -->
+                                    <path d="M20 170 L70 170 L70 200 C55 185 35 215 20 200 Z"
+                                        class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                        data-paso="7-impar" />
+                                    <text x="45" y="190" class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        "IMPAR"
+                                    </text>
+
+                                    <!-- Convergencia -->
+                                    <line x1="295" y1="200" x2="295" y2="220"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8" />
+                                    <line x1="45" y1="200" x2="45" y2="220"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8" />
+                                    <line x1="45" y1="220" x2="295" y2="220"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8" />
+                                    <line x1="170" y1="220" x2="170" y2="245"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8" />
+
+                                    <!-- Fin -->
+                                    <ellipse cx="170" cy="265" rx="55" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="9" />
+                                    <text x="170" y="271"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">
+                                        Fin
+                                    </text>
+
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 dark:text-white">Simulador Interactivo</h4>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                        Ingrese un número entero:
+                                    </label>
+                                    <input type="number" id="input-numero" value="7" step="1"
+                                        class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg">
+                                </div>
+
+                                <button id="ejecutar-par-impar"
+                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                    </svg>
+                                    Verificar Número
+                                </button>
+
+                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[150px] shadow-inner"
+                                    id="salida-par-impar">
+                                    <p class="text-gray-500">→ Ingrese un número y presione "Verificar"</p>
+                                </div>
+
+                                <div
+                                    class="bg-pink-50 dark:bg-pink-950 p-4 rounded-xl border border-pink-200 dark:border-pink-800">
+                                    <h5
+                                        class="font-semibold text-pink-700 dark:text-pink-300 mb-2 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información
+                                    </h5>
+                                    <p class="text-sm text-pink-600 dark:text-pink-400">
+                                        El operador módulo (%) devuelve el residuo de una división. Si num % 2 = 0, el
+                                        número es par.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suma 1-100 -->
+                <div class="contenido-pestana hidden" id="suma-1-100">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Suma de 1 al
+                                    100
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-400">Estructura iterativa FOR</p>
+                                <div
+                                    class="mt-4 bg-cyan-50 dark:bg-cyan-950 p-4 rounded-xl border border-cyan-200 dark:border-cyan-800">
+                                    <p class="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-2">Algoritmo:
+                                    </p>
+                                    <p class="text-sm font-mono text-cyan-900 dark:text-cyan-100">suma = 0</p>
+                                    <p class="text-sm font-mono text-cyan-900 dark:text-cyan-100">para i = 1 hasta 100
+                                    </p>
+                                    <p class="text-sm font-mono text-cyan-900 dark:text-cyan-100 ml-4">suma = suma + i
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">Diagrama de
+                                    Flujo</h4>
+                                <svg viewBox="0 0 320 380" class="w-full max-w-sm mx-auto">
+                                    <!-- Inicio -->
+                                    <ellipse cx="160" cy="25" rx="50" ry="18"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="1" />
+                                    <text x="160" y="31"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">Inicio</text>
+
+                                    <line x1="160" y1="43" x2="160" y2="65"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="2" />
+
+                                    <!-- Inicializacion -->
+                                    <rect x="120" y="65" width="80" height="30" rx="2"
+                                        class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                        data-paso="3" />
+                                    <text x="160" y="83"
+                                        class="fill-purple-700 dark:fill-purple-300 text-xs font-semibold"
+                                        text-anchor="middle">suma = 0</text>
+
+                                    <line x1="160" y1="95" x2="160" y2="115"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="4" />
+
+                                    <!-- FOR -->
+                                    <path d="M80 115 L240 115 L260 145 L240 175 L80 175 L60 145 Z"
+                                        class="paso-diagrama fill-cyan-100 dark:fill-cyan-900 stroke-cyan-600 dark:stroke-cyan-400 stroke-2"
+                                        data-paso="5" />
+                                    <text x="160" y="150" class="fill-cyan-700 dark:fill-cyan-300 text-xs font-semibold"
+                                        text-anchor="middle">i = 1; i <= 100; i=i + 1</text>
+
+                                            <!-- Salida F -->
+                                            <text x="50" y="138"
+                                                class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+
+                                            <!-- Proceso V -->
+                                            <line x1="160" y1="175" x2="160" y2="195"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="6" />
+                                            <text x="165" y="189"
+                                                class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+
+                                            <rect x="105" y="195" width="110" height="30" rx="2"
+                                                class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                                data-paso="7" />
+                                            <text x="160" y="213"
+                                                class="fill-purple-700 dark:fill-purple-300 text-xs font-semibold"
+                                                text-anchor="middle">suma = suma + i</text>
+
+                                            <!-- Retorno -->
+                                            <line x1="160" y1="225" x2="160" y2="255"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="8" />
+                                            <line x1="160" y1="240" x2="40" y2="240"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="8" />
+                                            <line x1="40" y1="240" x2="40" y2="145"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="8" />
+                                            <line x1="40" y1="145" x2="60" y2="145"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="8" />
+
+                                            <!-- Salida -->
+                                            <path d="M110 250 L200 250 L200 280 C175 260 125 300 110 280 Z"
+                                                class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                                data-paso="9" />
+                                            <text x="160" y="265"
+                                                class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                                text-anchor="middle">suma</text>
+
+                                            <!-- Conexion a salida -->
+                                            <line x1="160" y1="280" x2="160" y2="310"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="10" />
+
+                                            <!-- Fin -->
+                                            <ellipse cx="160" cy="330" rx="50" ry="18"
+                                                class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                                data-paso="11" />
+                                            <text x="160" y="336"
+                                                class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                                text-anchor="middle">Fin</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 dark:text-white">Simulador Interactivo</h4>
+                            </div>
+
+                            <div class="space-y-6">
+                                <button id="ejecutar-suma"
+                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                    </svg>
+                                    Calcular Suma del 1 al 100
+                                </button>
+
+                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[200px] max-h-[300px] overflow-y-auto shadow-inner"
+                                    id="salida-suma">
+                                    <p class="text-gray-500">→ Presione "Calcular" para ejecutar el algoritmo</p>
+                                </div>
+
+                                <div id="progreso-suma" class="text-center">
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2 hidden"
+                                        id="barra-progreso-container">
+                                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 h-3 rounded-full transition-all duration-300"
+                                            id="barra-progreso" style="width: 0%"></div>
+                                    </div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400" id="texto-progreso"></p>
+                                </div>
+
+                                <div
+                                    class="bg-cyan-50 dark:bg-cyan-950 p-4 rounded-xl border border-cyan-200 dark:border-cyan-800">
+                                    <h5
+                                        class="font-semibold text-cyan-700 dark:text-cyan-300 mb-2 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información
+                                    </h5>
+                                    <p class="text-sm text-cyan-600 dark:text-cyan-400 mb-2">
+                                        El bucle FOR es ideal cuando conocemos el número exacto de iteraciones.
+                                    </p>
+                                    <p class="text-xs text-cyan-500 dark:text-cyan-500 font-mono">
+                                        Resultado esperado: 5050
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mayor de 3 números -->
+                <div class="contenido-pestana hidden" id="mayor-3">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Mayor de 3
+                                    Números
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-400">Decisiones anidadas (IF-ELSE anidados)</p>
+                                <div
+                                    class="mt-4 bg-orange-50 dark:bg-orange-950 p-4 rounded-xl border border-orange-200 dark:border-orange-800">
+                                    <p class="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-2">Lógica:
+                                    </p>
+                                    <p class="text-xs font-mono text-orange-900 dark:text-orange-100">Si A > B y A > C →
+                                        Mayor es A</p>
+                                    <p class="text-xs font-mono text-orange-900 dark:text-orange-100">Sino, si B > C →
+                                        Mayor
+                                        es B</p>
+                                    <p class="text-xs font-mono text-orange-900 dark:text-orange-100">Sino → Mayor es C
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
+                                    Diagrama de Flujo
+                                </h4>
+
+                                <svg viewBox="0 0 360 540" class="w-full max-w-md mx-auto">
+
+                                    <!-- INICIO -->
+                                    <ellipse cx="180" cy="30" rx="60" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="1" />
+                                    <text x="180" y="36"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">
+                                        Inicio
+                                    </text>
+
+                                    <!-- Flecha -->
+                                    <line x1="180" y1="50" x2="180" y2="70"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="2" />
+
+                                    <!-- ENTRADA -->
+                                    <path d="M110 110 L230 110 L245 70 L125 70 Z"
+                                        class="paso-diagrama fill-blue-100 dark:fill-blue-900 stroke-blue-600 dark:stroke-blue-400 stroke-2"
+                                        data-paso="3" />
+                                    <text x="180" y="95" class="fill-blue-700 dark:fill-blue-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        A, B, C
+                                    </text>
+
+                                    <!-- Flecha -->
+                                    <line x1="180" y1="110" x2="180" y2="135"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="4" />
+
+                                    <!-- DECISION 1 -->
+                                    <path d="M180 135 L240 180 L180 225 L120 180 Z"
+                                        class="paso-diagrama fill-pink-100 dark:fill-pink-900 stroke-pink-600 dark:stroke-pink-400 stroke-2"
+                                        data-paso="5" />
+                                    <text x="180" y="183"
+                                        class="fill-pink-700 dark:fill-pink-300 text-[10px] font-semibold"
+                                        text-anchor="middle">
+                                        A >= B Y A >= C
+                                    </text>
+
+                                    <!-- RAMA VERDADERA (A es mayor) -->
+                                    <line x1="240" y1="180" x2="300" y2="180"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-a" />
+                                    <line x1="300" y1="200" x2="300" y2="180"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-a" />
+                                    <text x="265" y="170" class="fill-green-600 dark:fill-green-400 text-xs font-bold">
+                                        V
+                                    </text>
+
+                                    <!-- PROCESO mayor = A -->
+                                    <rect x="265" y="200" width="70" height="40" rx="4"
+                                        class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                        data-paso="7-a" />
+                                    <text x="300" y="224"
+                                        class="fill-purple-700 dark:fill-purple-300 text-[10px] font-semibold"
+                                        text-anchor="middle">
+                                        mayor = A
+                                    </text>
+
+                                    <!-- Flecha hacia convergencia -->
+                                    <line x1="300" y1="240" x2="300" y2="410"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8-a" />
+
+                                    <!-- RAMA FALSA hacia abajo -->
+                                    <line x1="110" y1="180" x2="110" y2="255"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-bc" />
+                                    <line x1="110" y1="180" x2="120" y2="180"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="6-bc" />
+                                    <text x="115" y="170" class="fill-red-600 dark:fill-red-400 text-xs font-bold">
+                                        F
+                                    </text>
+
+                                    <!-- DECISION 2 -->
+                                    <path d="M110 255 L170 300 L110 345 L50 300 Z"
+                                        class="paso-diagrama fill-pink-100 dark:fill-pink-900 stroke-pink-600 dark:stroke-pink-400 stroke-2"
+                                        data-paso="7-bc" />
+                                    <text x="110" y="305" class="fill-pink-700 dark:fill-pink-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        B >= C
+                                    </text>
+
+                                    <!-- VERDADERO B mayor -->
+                                    <line x1="170" y1="300" x2="190" y2="300"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8-b" />
+                                    <line x1="190" y1="300" x2="190" y2="330"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8-b" />
+                                    <text x="175" y="295" class="fill-green-600 dark:fill-green-400 text-xs font-bold">
+                                        V
+                                    </text>
+
+                                    <!-- PROCESO mayor = B -->
+                                    <rect x="150" y="330" width="70" height="40" rx="4"
+                                        class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                        data-paso="9-b" />
+                                    <text x="185" y="354"
+                                        class="fill-purple-700 dark:fill-purple-300 text-[10px] font-semibold"
+                                        text-anchor="middle">
+                                        mayor = B
+                                    </text>
+                                    <!-- FALSO C mayor -->
+                                    <line x1="35" y1="300" x2="35" y2="330"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8-c" />
+                                    <line x1="35" y1="300" x2="50" y2="300"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="8-c" />
+                                    <text x="40" y="295" class="fill-red-600 dark:fill-red-400 text-xs font-bold">
+                                        F
+                                    </text>
+
+                                    <!-- PROCESO mayor = C -->
+                                    <rect x="0" y="330" width="70" height="40" rx="4"
+                                        class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                        data-paso="9-c" />
+                                    <text x="35" y="354"
+                                        class="fill-purple-700 dark:fill-purple-300 text-[10px] font-semibold"
+                                        text-anchor="middle">
+                                        mayor = C
+                                    </text>
+
+                                    <!-- Flecha hacia convergencia -->
+                                    <line x1="35" y1="390" x2="190" y2="390"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+                                    <line x1="35" y1="370" x2="35" y2="390"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+                                    <line x1="190" y1="370" x2="190" y2="390"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+                                    <line x1="110" y1="410" x2="110" y2="390"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+
+                                    <!-- Convergencia de procesos -->
+                                    <line x1="110" y1="410" x2="300" y2="410"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+                                    <line x1="35" y1="390" x2="190" y2="390"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+                                    <line x1="180" y1="410" x2="180" y2="430"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="10" />
+
+                                    <!-- SALIDA -->
+                                    <path d="M120 430 L240 430 L240 470 C210 445 150 495 120 470 Z"
+                                        class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                        data-paso="11" />
+                                    <text x="180" y="455" class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                        text-anchor="middle">
+                                        mayor
+                                    </text>
+
+                                    <!-- Flecha -->
+                                    <line x1="180" y1="470" x2="180" y2="490"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="12" />
+
+                                    <!-- FIN -->
+                                    <ellipse cx="180" cy="510" rx="60" ry="20"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="13" />
+                                    <text x="180" y="516"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">
+                                        Fin
+                                    </text>
+
+                                </svg>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 dark:text-white">Simulador Interactivo</h4>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
+                                            A:</label>
+                                        <input type="number" id="input-a" value="15"
+                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
+                                            B:</label>
+                                        <input type="number" id="input-b" value="23"
+                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
+                                            C:</label>
+                                        <input type="number" id="input-c" value="8"
+                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                    </div>
+                                </div>
+
+                                <button id="ejecutar-mayor"
+                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                    </svg>
+                                    Encontrar el Mayor
+                                </button>
+
+                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[180px] shadow-inner"
+                                    id="salida-mayor">
+                                    <p class="text-gray-500">→ Ingrese tres números y presione "Encontrar"</p>
+                                </div>
+
+                                <div
+                                    class="bg-orange-50 dark:bg-orange-950 p-4 rounded-xl border border-orange-200 dark:border-orange-800">
+                                    <h5
+                                        class="font-semibold text-orange-700 dark:text-orange-300 mb-2 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información
+                                    </h5>
+                                    <p class="text-sm text-orange-600 dark:text-orange-400">
+                                        Este algoritmo utiliza decisiones anidadas para comparar tres números y
+                                        determinar
+                                        cuál es el mayor.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Multiplicar -->
+                <div class="contenido-pestana hidden" id="tabla-multiplicar">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="mb-6">
+                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Tabla de
+                                    Multiplicar</h3>
+                                <p class="text-gray-600 dark:text-gray-400">Estructura iterativa FOR (1 al 10)</p>
+                                <div
+                                    class="mt-4 bg-violet-50 dark:bg-violet-950 p-4 rounded-xl border border-violet-200 dark:border-violet-800">
+                                    <p class="text-sm font-semibold text-violet-700 dark:text-violet-300 mb-2">
+                                        Algoritmo:
+                                    </p>
+                                    <p class="text-sm font-mono text-violet-900 dark:text-violet-100">Leer numero</p>
+                                    <p class="text-sm font-mono text-violet-900 dark:text-violet-100">para i = 1 hasta
+                                        10
+                                    </p>
+                                    <p class="text-sm font-mono text-violet-900 dark:text-violet-100 ml-4">resultado =
+                                        numero × i</p>
+                                    <p class="text-sm font-mono text-violet-900 dark:text-violet-100 ml-4">Mostrar
+                                        resultado
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">Diagrama de
+                                    Flujo</h4>
+                                <svg viewBox="0 0 320 380" class="w-full max-w-sm mx-auto">
+                                    <!-- Inicio -->
+                                    <ellipse cx="160" cy="25" rx="50" ry="18"
+                                        class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                        data-paso="1" />
+                                    <text x="160" y="31"
+                                        class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                        text-anchor="middle">Inicio</text>
+
+                                    <line x1="160" y1="43" x2="160" y2="65"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="2" />
+
+                                    <!-- Entrada -->
+                                    <path d="M115 65 L205 65 L215 95 L125 95Z"
+                                        class="paso-diagrama fill-blue-100 dark:fill-blue-900 stroke-blue-600 dark:stroke-blue-400 stroke-2"
+                                        data-paso="3" />
+                                    <text x="160" y="83" class="fill-blue-700 dark:fill-blue-300 text-xs font-semibold"
+                                        text-anchor="middle">numero</text>
+
+                                    <line x1="160" y1="95" x2="160" y2="125"
+                                        class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                        data-paso="4" />
+
+                                    <!-- FOR -->
+                                    <path d="M80 125 L240 125 L260 145 L240 165 L80 165 L60 145 Z"
+                                        class="paso-diagrama fill-cyan-100 dark:fill-cyan-900 stroke-cyan-600 dark:stroke-cyan-400 stroke-2"
+                                        data-paso="5" />
+                                    <text x="160" y="150" class="fill-cyan-700 dark:fill-cyan-300 text-xs font-semibold"
+                                        text-anchor="middle">i = 1; i <= 10; i=i + 1</text>
+
+                                            <!-- Salida F -->
+                                            <text x="50" y="138"
+                                                class="fill-red-600 dark:fill-red-400 text-xs font-bold">F</text>
+
+                                            <!-- Proceso V -->
+                                            <line x1="160" y1="165" x2="160" y2="195"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="6" />
+                                            <text x="165" y="180"
+                                                class="fill-green-600 dark:fill-green-400 text-xs font-bold">V</text>
+
+                                            <rect x="100" y="195" width="120" height="30" rx="2"
+                                                class="paso-diagrama fill-purple-100 dark:fill-purple-900 stroke-purple-600 dark:stroke-purple-400 stroke-2"
+                                                data-paso="7" />
+                                            <text x="160" y="213"
+                                                class="fill-purple-700 dark:fill-purple-300 text-xs font-semibold"
+                                                text-anchor="middle">resultado = num x i</text>
+
+                                            <line x1="160" y1="225" x2="160" y2="245"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="8" />
+
+                                            <!-- Salida -->
+                                            <path d="M100 245 L220 245 L220 275 C195 260 145 290 100 275 Z"
+                                                class="paso-diagrama fill-teal-100 dark:fill-teal-900 stroke-teal-600 dark:stroke-teal-400 stroke-2"
+                                                data-paso="9" />
+                                            <text x="160" y="265"
+                                                class="fill-teal-700 dark:fill-teal-300 text-xs font-semibold"
+                                                text-anchor="middle">resultado</text>
+
+                                            <!-- Retorno -->
+                                            <line x1="160" y1="275" x2="160" y2="330"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="10" />
+                                            <line x1="160" y1="300" x2="40" y2="300"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="10" />
+                                            <line x1="40" y1="300" x2="40" y2="145"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="10" />
+                                            <line x1="40" y1="145" x2="60" y2="145"
+                                                class="paso-diagrama stroke-gray-700 dark:stroke-gray-300 stroke-2"
+                                                data-paso="10" />
+
+                                            <!-- Fin -->
+                                            <ellipse cx="160" cy="345" rx="50" ry="18"
+                                                class="paso-diagrama fill-indigo-100 dark:fill-indigo-900 stroke-indigo-600 dark:stroke-indigo-400 stroke-2"
+                                                data-paso="11" />
+                                            <text x="160" y="351"
+                                                class="fill-indigo-700 dark:fill-indigo-300 text-sm font-semibold"
+                                                text-anchor="middle">Fin</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h4 class="text-2xl font-bold text-gray-800 dark:text-white">Simulador Interactivo</h4>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                        Número para generar tabla (1-20):
+                                    </label>
+                                    <input type="number" id="input-tabla" value="7" min="1" max="20" step="1"
+                                        class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg">
+                                </div>
+
+                                <button id="ejecutar-tabla"
+                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                    </svg>
+                                    Generar Tabla de Multiplicar
+                                </button>
+
+                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[250px] max-h-[350px] overflow-y-auto shadow-inner"
+                                    id="salida-tabla">
+                                    <p class="text-gray-500">→ Ingrese un número y presione "Generar"</p>
+                                </div>
+
+                                <div
+                                    class="bg-violet-50 dark:bg-violet-950 p-4 rounded-xl border border-violet-200 dark:border-violet-800">
+                                    <h5
+                                        class="font-semibold text-violet-700 dark:text-violet-300 mb-2 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Información
+                                    </h5>
+                                    <p class="text-sm text-violet-600 dark:text-violet-400">
+                                        Este bucle FOR ejecuta exactamente 10 iteraciones, mostrando los resultados de
+                                        las
+                                        multiplicaciones.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz -->
+        <section id="quiz" class="py-20 px-4 bg-gray-100 dark:bg-gray-800">
+            <div class="max-w-3xl mx-auto">
+                <h2
+                    class="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                    Quiz Interactivo</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 text-lg mb-8">Pon a prueba tus conocimientos</p>
+                <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl">
+                    <div class="pregunta-quiz activa" data-pregunta="1">
+                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 1 de 5</h3>
+                        <p class="text-xl font-bold mb-6">¿Qué símbolo representa una decisión?</p>
+                        <div class="space-y-3">
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Rectángulo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="true">Rombo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Óvalo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Círculo</button>
+                        </div>
+                        <div class="retroalimentacion-quiz mt-4"></div>
+                    </div>
+                    <div class="pregunta-quiz hidden" data-pregunta="2">
+                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 2 de 5</h3>
+                        <p class="text-xl font-bold mb-6">¿Cuál es el resultado de 7 % 3?</p>
+                        <div class="space-y-3">
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">2</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="true">1</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">0</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">3</button>
+                        </div>
+                        <div class="retroalimentacion-quiz mt-4"></div>
+                    </div>
+                    <div class="pregunta-quiz hidden" data-pregunta="3">
+                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 3 de 5</h3>
+                        <p class="text-xl font-bold mb-6">¿Qué estructura ejecuta código al menos una vez?</p>
+                        <div class="space-y-3">
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">WHILE</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">FOR</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="true">DO-WHILE</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">IF-ELSE</button>
+                        </div>
+                        <div class="retroalimentacion-quiz mt-4"></div>
+                    </div>
+                    <div class="pregunta-quiz hidden" data-pregunta="4">
+                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 4 de 5</h3>
+                        <p class="text-xl font-bold mb-6">¿Qué símbolo se usa para entrada de datos?</p>
+                        <div class="space-y-3">
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Rectángulo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="true">Paralelogramo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Rombo</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">Hexágono</button>
+                        </div>
+                        <div class="retroalimentacion-quiz mt-4"></div>
+                    </div>
+                    <div class="pregunta-quiz hidden" data-pregunta="5">
+                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 5 de 5</h3>
+                        <p class="text-xl font-bold mb-6">¿Cuál operador es verdadero si AL MENOS UNA condición lo es?
+                        </p>
+                        <div class="space-y-3">
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">AND</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="true">OR</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">NOT</button>
+                            <button
+                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                data-correcta="false">XOR</button>
+                        </div>
+                        <div class="retroalimentacion-quiz mt-4"></div>
+                    </div>
+                    <div class="resultado-quiz hidden text-center">
+                        <h3 class="text-3xl font-bold text-indigo-500 mb-4">¡Quiz Completado!</h3>
+                        <p class="puntuacion-final text-xl mb-6"></p>
+                        <button
+                            class="boton-reiniciar-quiz px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:opacity-90 transition flex items-center gap-2 mx-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Reiniciar Quiz
+                        </button>
+                    </div>
+                    <div class="navegacion-quiz mt-6 text-center">
+                        <button
+                            class="boton-siguiente-quiz px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>Siguiente →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12 px-4 border-t border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div>
+                        <h4 class="text-xl font-bold text-indigo-400 mb-4 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            DiagramasFlujo
+                        </h4>
+                        <p class="text-gray-400">Plataforma educativa para aprender programacion a traves de diagramas
+                            de
+                            flujo.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Enlaces Rápidos</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="#introduccion" class="hover:text-indigo-400 transition">Introducción</a></li>
+                            <li><a href="#simbolos" class="hover:text-indigo-400 transition">Símbolos</a></li>
+                            <li><a href="#estructuras" class="hover:text-indigo-400 transition">Estructuras</a></li>
+                            <li><a href="#ejemplos" class="hover:text-indigo-400 transition">Ejemplos</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Recursos</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="#conceptos" class="hover:text-indigo-400 transition">Conceptos</a></li>
+                            <li><a href="#quiz" class="hover:text-indigo-400 transition">Quiz</a></li>
+                            <li><a href="https://github.com" target="_blank"
+                                    class="hover:text-indigo-400 transition">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                    <p>© 2026 JtittoY. Proyecto educativo de código abierto.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
