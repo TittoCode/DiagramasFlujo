@@ -2,8 +2,6 @@
 
 Una plataforma web interactiva diseñada para enseñar los fundamentos de la programación a través de diagramas de flujo. Este proyecto combina teoría clara, visualización de algoritmos y simuladores prácticos para facilitar el aprendizaje de lógica de programación.
 
-![DiagramasFlujo Preview]( https://tittocode.github.io/DiagramasFlujo/ )
-
 ## Características Principales
 
 *   **Diseño Educativo:** Interfaz limpia y profesional optimizada para el aprendizaje, con una paleta de colores suave que reduce la fatiga visual.
@@ -64,3 +62,4 @@ Este proyecto es de código abierto y está disponible bajo la Licencia MIT. Si�
 
 ---
 © 2026 JtittoY. Desarrollado con pasión por la enseñanza de la programación.
+
