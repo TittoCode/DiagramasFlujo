@@ -174,8 +174,8 @@ function configurarPestanas() {
 
             // Remover clase activa de todas las pestañas y contenidos
             pestanas.forEach(p => {
-                p.classList.remove('bg-gradient-to-r', 'from-indigo-500', 'to-purple-500', 'text-white');
-                p.classList.add('bg-gray-200', 'dark:bg-gray-700');
+                p.classList.remove('bg-edu-accent', 'text-white', 'shadow-md');
+                p.classList.add('bg-edu-paper', 'dark:bg-edu-dark-surface', 'text-edu-secondary', 'dark:text-gray-300');
             });
             contenidosPestana.forEach(c => {
                 c.classList.add('hidden');
@@ -183,8 +183,8 @@ function configurarPestanas() {
             });
 
             // Activar pestaña y contenido seleccionados
-            pestana.classList.remove('bg-gray-200', 'dark:bg-gray-700');
-            pestana.classList.add('bg-gradient-to-r', 'from-indigo-500', 'to-purple-500', 'text-white');
+            pestana.classList.remove('bg-edu-paper', 'dark:bg-edu-dark-surface', 'text-edu-secondary', 'dark:text-gray-300');
+            pestana.classList.add('bg-edu-accent', 'text-white', 'shadow-md');
 
             const contenidoActivo = document.getElementById(ejemploId);
             if (contenidoActivo) {
@@ -595,17 +595,19 @@ function verificarRespuestaQuiz(opcionSeleccionada) {
 
         // Mostrar respuesta correcta
         if (opcion.getAttribute('data-correcta') === 'true') {
-            opcion.classList.add('correcta');
+            opcion.classList.add('bg-emerald-100', 'dark:bg-emerald-900/30', 'border-emerald-500', 'text-emerald-700', 'dark:text-emerald-300');
+            opcion.classList.remove('border-gray-200', 'dark:border-gray-700');
         }
     });
 
     // Marcar respuesta seleccionada si es incorrecta
     if (!esCorrecta) {
-        opcionSeleccionada.classList.add('incorrecta');
-        retroalimentacion.innerHTML = '<p class="text-red-500 dark:text-red-400">[Incorrecto] La respuesta correcta esta marcada en verde.</p>';
+        opcionSeleccionada.classList.add('bg-red-100', 'dark:bg-red-900/30', 'border-red-500', 'text-red-700', 'dark:text-red-300');
+        opcionSeleccionada.classList.remove('border-gray-200', 'dark:border-gray-700');
+        retroalimentacion.innerHTML = '<p class="text-red-600 dark:text-red-400 font-medium flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Incorrecto. La respuesta correcta está marcada en verde.</p>';
     } else {
         respuestasCorrectasQuiz++;
-        retroalimentacion.innerHTML = '<p class="text-green-500 dark:text-green-400">[Correcto] Excelente respuesta.</p>';
+        retroalimentacion.innerHTML = '<p class="text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> ¡Correcto! Excelente respuesta.</p>';
     }
 
     // Habilitar botón siguiente
@@ -618,8 +620,10 @@ function siguientePreguntaQuiz() {
     const botonSiguiente = document.querySelector('.boton-siguiente-quiz');
 
     preguntaActual.classList.remove('activa');
+    preguntaActual.classList.add('hidden');
 
     if (siguientePregunta && siguientePregunta.classList.contains('pregunta-quiz')) {
+        siguientePregunta.classList.remove('hidden');
         siguientePregunta.classList.add('activa');
         botonSiguiente.disabled = true;
         preguntaActualQuiz++;
@@ -635,6 +639,7 @@ function mostrarResultadoQuiz() {
     const puntuacionFinal = document.querySelector('.puntuacion-final');
 
     navegacionQuiz.style.display = 'none';
+    resultadoQuiz.classList.remove('hidden');
     resultadoQuiz.classList.add('activo');
 
     const porcentaje = (respuestasCorrectasQuiz / 5) * 100;
@@ -656,7 +661,7 @@ function mostrarResultadoQuiz() {
     }
 
     puntuacionFinal.innerHTML = `
-        <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">${calificacion}</p>
+        <p class="text-2xl font-bold text-edu-primary dark:text-white mb-4">${calificacion}</p>
         <p class="text-lg">Obtuviste <strong class="text-indigo-600 dark:text-indigo-400">${respuestasCorrectasQuiz} de 5</strong> respuestas correctas</p>
         <p class="text-lg">Puntuacion: <strong class="text-indigo-600 dark:text-indigo-400">${porcentaje}%</strong></p>
         <p class="mt-2 text-gray-600 dark:text-gray-300">${mensaje}</p>
@@ -672,6 +677,7 @@ function reiniciarQuiz() {
     const resultadoQuiz = document.querySelector('.resultado-quiz');
     const navegacionQuiz = document.querySelector('.navegacion-quiz');
     resultadoQuiz.classList.remove('activo');
+    resultadoQuiz.classList.add('hidden');
     navegacionQuiz.style.display = 'block';
 
     // Reiniciar preguntas
@@ -683,7 +689,8 @@ function reiniciarQuiz() {
         // Limpiar opciones
         opciones.forEach(opcion => {
             opcion.disabled = false;
-            opcion.classList.remove('correcta', 'incorrecta');
+            opcion.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/30', 'border-emerald-500', 'text-emerald-700', 'dark:text-emerald-300', 'bg-red-100', 'dark:bg-red-900/30', 'border-red-500', 'text-red-700', 'dark:text-red-300');
+            opcion.classList.add('border-gray-200', 'dark:border-gray-700');
         });
 
         // Limpiar retroalimentación
@@ -692,8 +699,10 @@ function reiniciarQuiz() {
         // Mostrar primera pregunta
         if (index === 0) {
             pregunta.classList.add('activa');
+            pregunta.classList.remove('hidden');
         } else {
             pregunta.classList.remove('activa');
+            pregunta.classList.add('hidden');
         }
     });
 
@@ -719,7 +728,7 @@ function configurarAnimacionesScroll() {
     });
 
     // Observar tarjetas y elementos
-    const elementos = document.querySelectorAll('.tarjeta-info, .tarjeta-simbolo, .tarjeta-estructura, .item-acordeon');
+    const elementos = document.querySelectorAll('.bg-edu-paper, .item-acordeon, .tarjeta-simbolo, .tarjeta-estructura');
     elementos.forEach(elemento => {
         elemento.style.opacity = '0';
         elemento.style.transform = 'translateY(30px)';

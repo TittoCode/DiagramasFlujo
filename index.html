@@ -13,14 +13,32 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        edu: {
+                            bg: '#F9F7F4',      // Cremita papel
+                            paper: '#FFFFFF',   // Blanco papel
+                            primary: '#2D3748', // Texto principal (Gris azulado oscuro)
+                            secondary: '#4A5568', // Texto secundario
+                            accent: '#5B7C9E',  // Azul acero (Académico)
+                            highlight: '#E67E50', // Terracotta (Resaltado suave)
+                            dark: {
+                                bg: '#0F172A',
+                                surface: '#1E293B',
+                                border: '#334155'
+                            }
+                        }
+                    },
                     animation: {
-                        'pulse-slow': 'pulse 2s infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'fade-up': 'fadeUp 0.8s ease-out'
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.6s ease-out'
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
-                        fadeUp: { from: { opacity: 0, transform: 'translateY(30px)' }, to: { opacity: 1, transform: 'translateY(0)' } }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        fadeUp: { from: { opacity: 0, transform: 'translateY(15px)' }, to: { opacity: 1, transform: 'translateY(0)' } }
+                    },
+                    boxShadow: {
+                        'edu': '0 2px 4px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+                        'edu-hover': '0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)'
                     }
                 }
             }
@@ -30,20 +48,20 @@
     <link rel="stylesheet" href="assets/css/custom.css">
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+<body
+    class="bg-edu-bg dark:bg-edu-dark-bg text-edu-primary dark:text-gray-100 font-sans transition-colors duration-300">
     <!-- Navegación -->
     <nav id="navegacion" aria-label="Navegación principal"
-        class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg transition-all">
+        class="fixed top-0 left-0 right-0 z-50 bg-edu-paper/95 dark:bg-edu-dark-surface/95 backdrop-blur-md shadow-edu border-b border-gray-200/50 dark:border-white/5 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <a href="#inicio" class="flex items-center gap-2" aria-label="Ir al inicio">
-                    <svg class="w-8 h-8 text-indigo-500 animate-pulse-slow" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24" aria-hidden="true">
+                    <svg class="w-8 h-8 text-edu-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
-                    <span
-                        class="text-xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">DiagramasFlujo</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white tracking-tight">DiagramasFlujo</span>
                 </a>
                 <button id="menuHamburguesa" class="md:hidden flex flex-col gap-1 p-2"
                     aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menuNav">
@@ -53,22 +71,22 @@
                 </button>
                 <ul id="menuNav" class="hidden md:flex items-center gap-6" role="menubar">
                     <li role="none"><a href="#inicio" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Inicio</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Inicio</a>
                     </li>
                     <li role="none"><a href="#introduccion" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Introducción</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Introducción</a>
                     </li>
                     <li role="none"><a href="#simbolos" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Símbolos</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Símbolos</a>
                     </li>
                     <li role="none"><a href="#estructuras" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Estructuras</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Estructuras</a>
                     </li>
                     <li role="none"><a href="#ejemplos" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Ejemplos</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Ejemplos</a>
                     </li>
                     <li role="none"><a href="#quiz" role="menuitem"
-                            class="hover:text-indigo-500 transition font-medium focus:outline-none focus:text-indigo-500">Quiz</a>
+                            class="hover:text-edu-accent transition font-medium focus:outline-none focus:text-edu-accent">Quiz</a>
                     </li>
                 </ul>
                 <button id="botonTema" aria-label="Cambiar tema de color"
@@ -92,22 +110,21 @@
 
         <!-- Hero -->
         <section id="inicio"
-            class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700">
+            class="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#1e293b]">
             <div
                 class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=')] opacity-30">
             </div>
 
             <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
                 <div
-                    class="mb-6 inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                    <span class="text-yellow-300 font-semibold text-sm">Fundamentos de Programación</span>
+                    class="mb-6 inline-block px-4 py-1.5 bg-white/5 backdrop-blur-sm rounded-full border border-white/10">
+                    <span class="text-blue-200 font-medium text-sm tracking-wide">Fundamentos de Programación</span>
                 </div>
 
-                <h1
-                    class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
                     Domina los
                     <span
-                        class="bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 text-transparent bg-clip-text">
+                        class="text-white relative inline-block after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-full after:h-1.5 after:bg-edu-highlight after:rounded-full">
                         Diagramas de Flujo
                     </span>
                 </h1>
@@ -121,7 +138,7 @@
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="#introduccion"
-                        class="group px-8 py-4 bg-white text-indigo-700 font-bold rounded-full text-lg shadow-2xl hover:shadow-white/30 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                        class="group px-8 py-4 bg-white text-slate-800 font-semibold rounded-lg text-lg shadow-lg hover:bg-gray-50 hover:translate-y-[-2px] transition-all duration-300 flex items-center gap-2">
                         Empecemos
                         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -166,14 +183,13 @@
         </section>
 
         <!-- Introducción -->
-        <section id="introduccion" class="py-20 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <section id="introduccion" class="py-20 px-4 bg-edu-bg dark:bg-edu-dark-bg transition-colors duration-300">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2
-                        class="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-edu-primary dark:text-white tracking-tight">
                         Introducción a los Diagramas de Flujo
                     </h2>
-                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-8 rounded-full">
+                    <div class="w-24 h-1.5 bg-edu-highlight mx-auto mb-8 rounded-full">
                     </div>
                     <p class="text-gray-600 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
                         Domina la representación visual de algoritmos, la habilidad técnica que separa a los que "pican
@@ -184,7 +200,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
 
                     <div
-                        class="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 dark:border-gray-700">
+                        class="group bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu hover:shadow-edu-hover hover:translate-y-[-2px] transition-all duration-300 border border-gray-200/60 dark:border-white/5">
                         <div
                             class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
                             <svg class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors" fill="none"
@@ -244,15 +260,13 @@
             </div>
         </section>
 
-        <section id="simbolos"
-            class="py-20 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+        <section id="simbolos" class="py-20 px-4 bg-white/50 dark:bg-black/20 transition-colors duration-300">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2
-                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-edu-primary dark:text-white tracking-tight">
                         Símbolos Fundamentales
                     </h2>
-                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6 rounded-full">
+                    <div class="w-24 h-1.5 bg-edu-highlight mx-auto mb-6 rounded-full">
                     </div>
                     <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
                         El "alfabeto" visual que todo estudiante de sistemas debe dominar para aprobar Programación I.
@@ -261,7 +275,7 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div
-                        class="group bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                        class="group bg-edu-paper dark:bg-edu-dark-surface p-6 rounded-xl shadow-edu hover:shadow-edu-hover hover:translate-y-[-2px] transition-all duration-300 border border-gray-200/60 dark:border-white/5">
                         <div class="mb-6 flex justify-center">
                             <svg class="w-32 h-20" viewBox="0 0 140 70">
                                 <ellipse cx="70" cy="35" rx="60" ry="28"
@@ -430,14 +444,13 @@
         </section>
 
         <!-- Estructuras -->
-        <section id="estructuras" class="py-20 px-4 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <section id="estructuras" class="py-20 px-4 bg-edu-bg dark:bg-edu-dark-bg transition-colors duration-300">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2
-                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    <h2 <h2 class="text-4xl md:text-5xl font-bold mb-4 text-edu-primary dark:text-white tracking-tight">
                         Estructuras de Control
                     </h2>
-                    <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6 rounded-full">
+                    <div class="w-24 h-1.5 bg-edu-highlight mx-auto mb-6 rounded-full">
                     </div>
                     <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
                         Los cimientos de la lógica: aprende cómo decidir caminos y repetir tareas de forma inteligente.
@@ -446,7 +459,7 @@
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div
-                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5 hover:shadow-edu-hover transition-all duration-300">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Condicional IF-ELSE</h3>
                             <span
@@ -500,7 +513,7 @@
                     </div>
 
                     <div
-                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5 hover:shadow-edu-hover transition-all duration-300">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle FOR (Para)</h3>
                             <span
@@ -543,7 +556,7 @@
                     </div>
 
                     <div
-                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5 hover:shadow-edu-hover transition-all duration-300">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle WHILE</h3>
                             <span
@@ -585,7 +598,7 @@
                     </div>
 
                     <div
-                        class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
+                        class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5 hover:shadow-edu-hover transition-all duration-300">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Bucle DO-WHILE</h3>
                             <span
@@ -855,15 +868,13 @@
 
 
         <!-- Ejemplos -->
-        <section id="ejemplos"
-            class="py-20 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <section id="ejemplos" class="py-20 px-4 bg-white/50 dark:bg-black/20">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2
-                        class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-edu-primary dark:text-white tracking-tight">
                         Ejemplos Prácticos
                     </h2>
-                    <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6"></div>
+                    <div class="w-24 h-1.5 bg-edu-highlight mx-auto mb-6 rounded-full"></div>
                     <p class="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
                         Aprende mediante simuladores interactivos paso a paso
                     </p>
@@ -872,7 +883,7 @@
                 <!-- Pestañas de navegación mejoradas -->
                 <div class="flex flex-wrap justify-center gap-3 mb-12">
                     <button
-                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+                        class="pestana px-6 py-3 rounded-lg font-semibold transition-all bg-edu-accent text-white shadow-md hover:bg-sky-700"
                         data-ejemplo="area-circulo">
                         <span class="flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -882,7 +893,7 @@
                         </span>
                     </button>
                     <button
-                        class="pestana px-6 py-3 rounded-xl font-semibold transition-all bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-md"
+                        class="pestana px-6 py-3 rounded-lg font-medium transition-all bg-edu-paper dark:bg-edu-dark-surface text-edu-secondary dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-white/5 shadow-sm"
                         data-ejemplo="par-impar">
                         <span class="flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -932,14 +943,15 @@
                     <div class="grid lg:grid-cols-2 gap-8">
                         <!-- Diagrama -->
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="mb-6">
-                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Cálculo del
+                                <h3 class="text-3xl font-bold text-edu-primary dark:text-white mb-2 tracking-tight">
+                                    Cálculo del
                                     Área de
                                     un Círculo</h3>
                                 <p class="text-gray-600 dark:text-gray-400">Estructura secuencial básica</p>
                                 <div
-                                    class="mt-4 bg-indigo-50 dark:bg-indigo-950 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                                    class="mt-4 bg-edu-bg dark:bg-gray-800/50 p-4 rounded-lg border-l-4 border-edu-accent">
                                     <p class="text-sm font-semibold text-indigo-700 dark:text-indigo-300 mb-2">Fórmula:
                                     </p>
                                     <p class="text-lg font-mono text-indigo-900 dark:text-indigo-100">área = π × radio²
@@ -948,7 +960,7 @@
                             </div>
 
                             <div
-                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                class="bg-edu-bg/50 dark:bg-gray-900/50 p-6 rounded-xl border border-gray-100 dark:border-gray-800">
                                 <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">Diagrama de
                                     Flujo</h4>
                                 <svg viewBox="0 0 300 400" class="w-full max-w-xs mx-auto">
@@ -1010,7 +1022,7 @@
 
                         <!-- Simulador -->
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="flex items-center gap-3 mb-6">
                                 <div
                                     class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
@@ -1031,12 +1043,12 @@
                                         Radio del círculo (cm):
                                     </label>
                                     <input type="number" id="input-radio" value="5" min="0.1" step="0.1"
-                                        class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg">
+                                        class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-edu-accent focus:ring-2 focus:ring-edu-accent/20 outline-none transition text-lg">
                                 </div>
 
                                 <div class="flex gap-3">
                                     <button id="ejecutar-area"
-                                        class="flex-1 py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                        class="flex-1 py-3 px-6 bg-edu-highlight text-white font-semibold rounded-lg hover:bg-orange-600 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                             <path
                                                 d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
@@ -1044,7 +1056,7 @@
                                         Ejecutar
                                     </button>
                                     <button id="reiniciar-area"
-                                        class="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center">
+                                        class="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -1052,7 +1064,7 @@
                                     </button>
                                 </div>
 
-                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[180px] max-h-[300px] overflow-y-auto shadow-inner"
+                                <div class="bg-slate-800 text-emerald-300 p-5 rounded-lg font-mono text-sm min-h-[180px] max-h-[300px] overflow-y-auto shadow-inner border border-slate-700"
                                     id="salida-area">
                                     <p class="text-gray-500">→ Presiona "Ejecutar" para comenzar la simulación</p>
                                 </div>
@@ -1081,14 +1093,15 @@
                 <div class="contenido-pestana hidden" id="par-impar">
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="mb-6">
-                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Determinar Par
+                                <h3 class="text-3xl font-bold text-edu-primary dark:text-white mb-2 tracking-tight">
+                                    Determinar Par
                                     o
                                     Impar</h3>
                                 <p class="text-gray-600 dark:text-gray-400">Estructura condicional IF-ELSE</p>
                                 <div
-                                    class="mt-4 bg-pink-50 dark:bg-pink-950 p-4 rounded-xl border border-pink-200 dark:border-pink-800">
+                                    class="mt-4 bg-edu-bg dark:bg-gray-800/50 p-4 rounded-lg border-l-4 border-pink-500">
                                     <p class="text-sm font-semibold text-pink-700 dark:text-pink-300 mb-2">Lógica:</p>
                                     <p class="text-lg font-mono text-pink-900 dark:text-pink-100">num % 2 == 0 → Par</p>
                                     <p class="text-lg font-mono text-pink-900 dark:text-pink-100">num % 2 != 0 → Impar
@@ -1097,7 +1110,7 @@
                             </div>
 
                             <div
-                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
+                                class="bg-edu-bg/50 dark:bg-gray-900/50 p-6 rounded-xl shadow-inner border border-gray-100 dark:border-gray-800">
 
                                 <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
                                     Diagrama de Flujo
@@ -1211,7 +1224,7 @@
                         </div>
 
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="flex items-center gap-3 mb-6">
                                 <div
                                     class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
@@ -1232,11 +1245,11 @@
                                         Ingrese un número entero:
                                     </label>
                                     <input type="number" id="input-numero" value="7" step="1"
-                                        class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg">
+                                        class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-edu-accent focus:ring-2 focus:ring-edu-accent/20 outline-none transition text-lg">
                                 </div>
 
                                 <button id="ejecutar-par-impar"
-                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    class="w-full py-3 px-6 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
@@ -1244,7 +1257,7 @@
                                     Verificar Número
                                 </button>
 
-                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[150px] shadow-inner"
+                                <div class="bg-slate-800 text-emerald-300 p-5 rounded-lg font-mono text-sm min-h-[150px] shadow-inner border border-slate-700"
                                     id="salida-par-impar">
                                     <p class="text-gray-500">→ Ingrese un número y presione "Verificar"</p>
                                 </div>
@@ -1273,14 +1286,15 @@
                 <div class="contenido-pestana hidden" id="suma-1-100">
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="mb-6">
-                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Suma de 1 al
+                                <h3 class="text-3xl font-bold text-edu-primary dark:text-white mb-2 tracking-tight">Suma
+                                    de 1 al
                                     100
                                 </h3>
                                 <p class="text-gray-600 dark:text-gray-400">Estructura iterativa FOR</p>
                                 <div
-                                    class="mt-4 bg-cyan-50 dark:bg-cyan-950 p-4 rounded-xl border border-cyan-200 dark:border-cyan-800">
+                                    class="mt-4 bg-edu-bg dark:bg-gray-800/50 p-4 rounded-lg border-l-4 border-cyan-500">
                                     <p class="text-sm font-semibold text-cyan-700 dark:text-cyan-300 mb-2">Algoritmo:
                                     </p>
                                     <p class="text-sm font-mono text-cyan-900 dark:text-cyan-100">suma = 0</p>
@@ -1292,7 +1306,7 @@
                             </div>
 
                             <div
-                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                class="bg-edu-bg/50 dark:bg-gray-900/50 p-6 rounded-xl border border-gray-100 dark:border-gray-800">
                                 <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">Diagrama de
                                     Flujo</h4>
                                 <svg viewBox="0 0 320 380" class="w-full max-w-sm mx-auto">
@@ -1384,7 +1398,7 @@
                         </div>
 
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="flex items-center gap-3 mb-6">
                                 <div
                                     class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
@@ -1401,7 +1415,7 @@
 
                             <div class="space-y-6">
                                 <button id="ejecutar-suma"
-                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    class="w-full py-3 px-6 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
@@ -1449,14 +1463,15 @@
                 <div class="contenido-pestana hidden" id="mayor-3">
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="mb-6">
-                                <h3 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">Mayor de 3
+                                <h3 class="text-3xl font-bold text-edu-primary dark:text-white mb-2 tracking-tight">
+                                    Mayor de 3
                                     Números
                                 </h3>
                                 <p class="text-gray-600 dark:text-gray-400">Decisiones anidadas (IF-ELSE anidados)</p>
                                 <div
-                                    class="mt-4 bg-orange-50 dark:bg-orange-950 p-4 rounded-xl border border-orange-200 dark:border-orange-800">
+                                    class="mt-4 bg-edu-bg dark:bg-gray-800/50 p-4 rounded-lg border-l-4 border-orange-500">
                                     <p class="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-2">Lógica:
                                     </p>
                                     <p class="text-xs font-mono text-orange-900 dark:text-orange-100">Si A > B y A > C →
@@ -1470,7 +1485,7 @@
                             </div>
 
                             <div
-                                class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6 rounded-xl">
+                                class="bg-edu-bg/50 dark:bg-gray-900/50 p-6 rounded-xl border border-gray-100 dark:border-gray-800">
 
                                 <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 text-center">
                                     Diagrama de Flujo
@@ -1659,7 +1674,7 @@
                         </div>
 
                         <div
-                            class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                            class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                             <div class="flex items-center gap-3 mb-6">
                                 <div
                                     class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center">
@@ -1681,26 +1696,26 @@
                                             class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
                                             A:</label>
                                         <input type="number" id="input-a" value="15"
-                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-edu-accent focus:ring-2 focus:ring-edu-accent/20 outline-none transition text-lg text-center">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
                                             B:</label>
                                         <input type="number" id="input-b" value="23"
-                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-edu-accent focus:ring-2 focus:ring-edu-accent/20 outline-none transition text-lg text-center">
                                     </div>
                                     <div>
                                         <label
                                             class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Número
                                             C:</label>
                                         <input type="number" id="input-c" value="8"
-                                            class="w-full p-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none transition text-lg text-center">
+                                            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-900 focus:border-edu-accent focus:ring-2 focus:ring-edu-accent/20 outline-none transition text-lg text-center">
                                     </div>
                                 </div>
 
                                 <button id="ejecutar-mayor"
-                                    class="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    class="w-full py-3 px-6 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path
                                             d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
@@ -1708,7 +1723,7 @@
                                     Encontrar el Mayor
                                 </button>
 
-                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[180px] shadow-inner"
+                                <div class="bg-slate-800 text-emerald-300 p-5 rounded-lg font-mono text-sm min-h-[180px] shadow-inner border border-slate-700"
                                     id="salida-mayor">
                                     <p class="text-gray-500">→ Ingrese tres números y presione "Encontrar"</p>
                                 </div>
@@ -1884,7 +1899,7 @@
                                     Generar Tabla de Multiplicar
                                 </button>
 
-                                <div class="bg-gray-900 text-green-400 p-5 rounded-xl font-mono text-sm min-h-[250px] max-h-[350px] overflow-y-auto shadow-inner"
+                                <div class="bg-slate-800 text-emerald-300 p-5 rounded-lg font-mono text-sm min-h-[250px] max-h-[350px] overflow-y-auto shadow-inner border border-slate-700"
                                     id="salida-tabla">
                                     <p class="text-gray-500">→ Ingrese un número y presione "Generar"</p>
                                 </div>
@@ -1913,114 +1928,115 @@
         </section>
 
         <!-- Quiz -->
-        <section id="quiz" class="py-20 px-4 bg-gray-100 dark:bg-gray-800">
+        <section id="quiz" class="py-20 px-4 bg-edu-bg dark:bg-edu-dark-bg transition-colors duration-300">
             <div class="max-w-3xl mx-auto">
                 <h2
-                    class="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                    class="text-4xl md:text-5xl font-bold text-center mb-4 text-edu-primary dark:text-white tracking-tight">
                     Quiz Interactivo</h2>
                 <p class="text-center text-gray-600 dark:text-gray-400 text-lg mb-8">Pon a prueba tus conocimientos</p>
-                <div class="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl">
+                <div
+                    class="bg-edu-paper dark:bg-edu-dark-surface p-8 rounded-xl shadow-edu border border-gray-200/60 dark:border-white/5">
                     <div class="pregunta-quiz activa" data-pregunta="1">
-                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 1 de 5</h3>
+                        <h3 class="text-edu-accent font-semibold mb-2">Pregunta 1 de 5</h3>
                         <p class="text-xl font-bold mb-6">¿Qué símbolo representa una decisión?</p>
                         <div class="space-y-3">
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Rectángulo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="true">Rombo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Óvalo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Círculo</button>
                         </div>
                         <div class="retroalimentacion-quiz mt-4"></div>
                     </div>
                     <div class="pregunta-quiz hidden" data-pregunta="2">
-                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 2 de 5</h3>
+                        <h3 class="text-edu-accent font-semibold mb-2">Pregunta 2 de 5</h3>
                         <p class="text-xl font-bold mb-6">¿Cuál es el resultado de 7 % 3?</p>
                         <div class="space-y-3">
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">2</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="true">1</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">0</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">3</button>
                         </div>
                         <div class="retroalimentacion-quiz mt-4"></div>
                     </div>
                     <div class="pregunta-quiz hidden" data-pregunta="3">
-                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 3 de 5</h3>
+                        <h3 class="text-edu-accent font-semibold mb-2">Pregunta 3 de 5</h3>
                         <p class="text-xl font-bold mb-6">¿Qué estructura ejecuta código al menos una vez?</p>
                         <div class="space-y-3">
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">WHILE</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">FOR</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="true">DO-WHILE</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">IF-ELSE</button>
                         </div>
                         <div class="retroalimentacion-quiz mt-4"></div>
                     </div>
                     <div class="pregunta-quiz hidden" data-pregunta="4">
-                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 4 de 5</h3>
+                        <h3 class="text-edu-accent font-semibold mb-2">Pregunta 4 de 5</h3>
                         <p class="text-xl font-bold mb-6">¿Qué símbolo se usa para entrada de datos?</p>
                         <div class="space-y-3">
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Rectángulo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="true">Paralelogramo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Rombo</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">Hexágono</button>
                         </div>
                         <div class="retroalimentacion-quiz mt-4"></div>
                     </div>
                     <div class="pregunta-quiz hidden" data-pregunta="5">
-                        <h3 class="text-indigo-500 font-semibold mb-2">Pregunta 5 de 5</h3>
+                        <h3 class="text-edu-accent font-semibold mb-2">Pregunta 5 de 5</h3>
                         <p class="text-xl font-bold mb-6">¿Cuál operador es verdadero si AL MENOS UNA condición lo es?
                         </p>
                         <div class="space-y-3">
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">AND</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="true">OR</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">NOT</button>
                             <button
-                                class="opcion-quiz w-full p-4 text-left rounded-xl border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-gray-700 transition"
+                                class="opcion-quiz w-full p-4 text-left rounded-lg border border-gray-200 dark:border-gray-700 hover:border-edu-accent hover:bg-edu-accent/5 dark:hover:bg-gray-700 transition"
                                 data-correcta="false">XOR</button>
                         </div>
                         <div class="retroalimentacion-quiz mt-4"></div>
                     </div>
                     <div class="resultado-quiz hidden text-center">
-                        <h3 class="text-3xl font-bold text-indigo-500 mb-4">¡Quiz Completado!</h3>
+                        <h3 class="text-3xl font-bold text-edu-primary dark:text-white mb-4">¡Quiz Completado!</h3>
                         <p class="puntuacion-final text-xl mb-6"></p>
                         <button
-                            class="boton-reiniciar-quiz px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:opacity-90 transition flex items-center gap-2 mx-auto">
+                            class="boton-reiniciar-quiz px-8 py-3 bg-edu-accent text-white font-semibold rounded-lg hover:bg-slate-700 transition flex items-center gap-2 mx-auto">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -2030,7 +2046,7 @@
                     </div>
                     <div class="navegacion-quiz mt-6 text-center">
                         <button
-                            class="boton-siguiente-quiz px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="boton-siguiente-quiz px-8 py-3 bg-edu-highlight text-white font-semibold rounded-lg hover:bg-orange-600 shadow-sm hover:shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled>Siguiente →</button>
                     </div>
                 </div>
@@ -2038,7 +2054,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-12 px-4 border-t border-gray-200 dark:border-gray-800">
+        <footer class="bg-edu-dark-bg text-white py-12 px-4 border-t border-white/10">
             <div class="max-w-7xl mx-auto">
                 <div class="grid md:grid-cols-3 gap-8 mb-8">
                     <div>
@@ -2067,7 +2083,7 @@
                         <ul class="space-y-2 text-gray-400">
                             <li><a href="#conceptos" class="hover:text-indigo-400 transition">Conceptos</a></li>
                             <li><a href="#quiz" class="hover:text-indigo-400 transition">Quiz</a></li>
-                            <li><a href="https://github.com" target="_blank"
+                            <li><a href="https://github.com/TittoCode/DiagramasFlujo" target="_blank"
                                     class="hover:text-indigo-400 transition">GitHub</a></li>
                         </ul>
                     </div>
